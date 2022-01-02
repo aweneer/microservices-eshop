@@ -1,0 +1,26 @@
+image: docker:19.03.0
+services:
+  - docker:19.03.0-dind
+
+variables:
+  DOCKER_DRIVER: overlay2
+  SPRING_PROFILES_ACTIVE: gitlab-ci
+  DOCKER_TLS_CERTDIR: "/certs"
+
+stages:
+  - build_images
+
+before_script:
+  - apk --no-cache add docker-compose
+  - docker info
+  - docker-compose --version
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.fel.cvut.cz:443
+
+build:
+  stage: build_images
+  script:
+    - docker-compose pull discovery
+    - docker-compose pull user
+    - docker-compose pull basket
+    - docker-compose pull catalog
+    - docker-compose pull order

@@ -1,0 +1,32 @@
+version: "3.3"
+services:
+  user:
+    image: registry.gitlab.fel.cvut.cz:443/hlavaj28/swa-eshop-user
+    ports:
+      - "8080:8080"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery:8761/eureka   
+  catalog:
+    image: registry.gitlab.fel.cvut.cz:443/hlavaj28/swa-eshop-catalog
+    ports:
+      - "8081:8080"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery:8761/eureka  
+  basket:
+    image: registry.gitlab.fel.cvut.cz:443/hlavaj28/swa-eshop-basket
+    ports:
+      - "8082:8080"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery:8761/eureka  
+  order:
+    image: registry.gitlab.fel.cvut.cz:443/hlavaj28/swa-eshop-order
+    ports:
+      - "8083:8080"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery:8761/eureka  
+  discovery:
+    image: registry.gitlab.fel.cvut.cz:443/hlavaj28/swa-eshop-discoveryservice
+    ports:
+      - "8761:8761"
+    expose:
+    - "8761"
